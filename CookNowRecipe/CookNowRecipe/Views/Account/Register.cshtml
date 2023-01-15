@@ -1,0 +1,104 @@
+﻿<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="border border-3 border-primary"></div>
+                <div class="card bg-white shadow-lg">
+                    <div class="card-body p-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
+                        <form id="registerForm" method="post" enctype="multipart/form-data" asp-controller="Account" asp-action="Register">
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+
+                                    <div class="form-outline">
+                                        <label class="form-label" for="userName">User Name</label>
+                                        <input type="text" id="UserName" name="UserName" class="form-control form-control-lg" />
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+
+                                    <div class="form-outline">
+                                        <label class="form-label" for="firstName">First Name</label>
+                                        <input type="text" id="FirstName" name="FirstName" class="form-control form-control-lg" />
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker w-100">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" name="LastName" class="form-control form-control-lg" id="LastName" />
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker w-100">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" name="Password" class="form-control form-control-lg" id="Password" />
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker w-100">
+                                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                        <input type="password" class="form-control form-control-lg" id="ConfirmPassword" />
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-outline-dark" id="registerUser" type="submit">Register</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+ 
+    $(document).ready(function() {
+        $("#registerUser").click(function() {
+            var url = $("#registerForm").attr("action");
+
+            var formData = $("#registerForm").serialize();
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false
+            });
+        });
+
+    });
+</script>
+
+
+

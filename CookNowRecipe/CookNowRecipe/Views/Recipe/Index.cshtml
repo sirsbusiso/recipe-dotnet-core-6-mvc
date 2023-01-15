@@ -1,0 +1,149 @@
+﻿
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/ckeditor/ckeditor.js"></script>
+<link src="~/js/font-awesome/css/fontawesome.css" rel="stylesheet" />
+
+<div class="border border-3 border-primary"></div>
+
+
+<br />
+<div class="row">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="button" class="btn btn-primary" id="showAddDiv">
+            Add New Recipe
+        </button>
+        <input type="button" class="btn btn-danger" value="Logout" onclick="location.href='@Url.Action("Login", "Account")'" />
+
+
+    </div>
+
+</div>
+
+
+<div class="row justify-content-center align-items-center h-100" id="display">
+    <div class="container">
+        <h3 class="align-content-md-center">@ViewBag.NoRecords</h3>
+
+        <div class="row">
+            @foreach (var item in @ViewBag.Results)
+            {
+                <div class="col-sm-4">
+                    <div class="card bg-white shadow-lg" style="width: 18rem;">
+                        <div class="card-body p-5">
+                            <img class="card-img-top" src="@item.FilePath" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Recipe</h5>
+                                <p class="card-text">@item.RecipeName</p>
+                                <a href="#" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @if (@ViewBag.NumberOfRecords > 6)
+        {
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <button type="button" class="btn btn-info" id="">
+                    Load More
+                </button>
+            </div>
+        }
+
+
+    </div>
+</div>
+
+<div class="row justify-content-center align-items-center h-100" id="add">
+    <div class="container py-5 h-100">
+        <form id="recipeForm" method="post" enctype="multipart/form-data" asp-controller="Recipe" asp-action="Create">
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+
+                    <div class="form-outline">
+                        <label class="form-label" for="userName">Recipe Name</label>
+                        <input type="text" name="RecipeName" class="form-control form-control-lg" />
+
+                    </div>
+
+                </div>
+                <div class="col-md-6 mb-4">
+
+                    <div class="form-outline">
+                        <label class="form-label" for="userName">Ingredient</label>
+                        <input type="text" name="Ingredient" class="form-control form-control-lg" />
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+
+                    <div class="form-outline">
+                        <label class="form-label" for="userName">Recipe Image</label>
+                        <input type="file" name="File" class="form-control form-control-lg" />
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <label class="form-label" for="userName">Instructions</label>
+                    <div class="form-outline">
+                        <textarea type="text" name="Instructions" class="ckeditor" cols="4" rows="4"></textarea>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn btn-outline-dark" id="submitRecipe" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+
+
+
+<script>
+    $(document).ready(function() {
+        $("#display").show();
+        $("#add").hide();
+        CKEDITOR.replace('#Instructions');
+    });
+    $(document).ready(function() {
+        $("#submitRecipe").click(function() {
+
+            var url = $("#recipeForm").attr("action");
+            var formData = $("#recipeForm").serialize();
+            console.log(formData);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false
+            });
+            $("#display").show();
+            $("#add").hide();
+        });
+
+    });
+
+    $(document).ready(function() {
+        $("#showAddDiv").click(function() {
+            $("#display").hide();
+            $("#add").show();
+        });
+    });
+
+</script>

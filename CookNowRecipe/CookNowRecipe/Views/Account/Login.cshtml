@@ -1,0 +1,60 @@
+﻿<script src="~/lib/jquery/dist/jquery.js"></script>
+<div class="vh-100 d-flex justify-content-center align-items-center">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="border border-3 border-primary"></div>
+                <div class="card bg-white shadow-lg">
+                    <div class="card-body p-5">
+                        <form id="loginForm" method="post" enctype="multipart/form-data" asp-controller="Account" asp-action="Login" class="mb-3 mt-md-4">
+                            <h2 class="fw-bold mb-2 text-uppercase ">Recipe</h2>
+                            <p class=" mb-5">Please enter your email and password!</p>
+                            <span id="loginError" class="alert-danger">@ViewBag.ErrorMessage</span>
+                            <div class="mb-3">
+                                <label for="email" class="form-label ">Email address</label>
+                                <input type="email" name="UserName" class="form-control" id="email" placeholder="name@example.com" value="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label ">Password</label>
+                                <input type="password" name ="Password" class="form-control" id="password" placeholder="*******"value="">
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-outline-dark" id="loginUser" type="submit">Login</button>
+                            </div>
+                        </form>
+                        <div>
+                            <p class="mb-0  text-center">
+                                Don't have an account? <a asp-controller="Account" asp-action="Register">Register</a>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $("#loginUser").click(function() {
+
+        var url = $("#loginForm").attr("action");
+        var formData = $("#loginForm").serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            processData: false,
+            contentType: false
+        });
+    });
+
+});
+
+$('input').focus(function(){
+    $("#loginError").text("");
+})
+</script>
+
