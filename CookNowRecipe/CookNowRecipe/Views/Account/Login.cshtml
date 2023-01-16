@@ -1,4 +1,8 @@
-﻿<script src="~/lib/jquery/dist/jquery.js"></script>
+﻿
+
+
+
+
 <div class="vh-100 d-flex justify-content-center align-items-center">
     <div class="container">
         <div class="row d-flex justify-content-center">
@@ -11,12 +15,13 @@
                             <p class=" mb-5">Please enter your email and password!</p>
                             <span id="loginError" class="alert-danger">@ViewBag.ErrorMessage</span>
                             <div class="mb-3">
-                                <label for="email" class="form-label ">Email address</label>
-                                <input type="email" name="UserName" class="form-control" id="email" placeholder="name@example.com" value="">
+                                <label for="email">Email address</label>
+                                <label for="email" class="form-label "></label>
+                                <input type="email" name="UserName" class="form-control" id="email" placeholder="name@example.com" value="" required>
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label ">Password</label>
-                                <input type="password" name ="Password" class="form-control" id="password" placeholder="*******"value="">
+                                <label for="password">Password (required, at least 6 characters)</label>
+                                <input type="password" name="Password" class="form-control" id="password" placeholder="*******" value="" required>
                             </div>
                             <div class="d-grid">
                                 <button class="btn btn-outline-dark" id="loginUser" type="submit">Login</button>
@@ -35,26 +40,37 @@
     </div>
 </div>
 
-<script>
-$(document).ready(function() {
-    $("#loginUser").click(function() {
+@section Scripts {
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
-        var url = $("#loginForm").attr("action");
-        var formData = $("#loginForm").serialize();
 
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: formData,
-            processData: false,
-            contentType: false
+    <script>
+        $(document).ready(function() {
+            $("#loginUser").click(function(event) {
+                $("#loginForm").validate({
+                    errorClass: "error fail-alert",
+                    validClass: "valid success-alert"
+                });
+                var url = $("#loginForm").attr("action");
+                var formData = $("#loginForm").serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    url: url,
+                    data: formData,
+                    processData: false,
+                    contentType: false
+                });
+
+            });
+
         });
-    });
 
-});
+        $('input').focus(function() {
+            $("#loginError").text("");
+        })
+    </script>
 
-$('input').focus(function(){
-    $("#loginError").text("");
-})
-</script>
+}
 

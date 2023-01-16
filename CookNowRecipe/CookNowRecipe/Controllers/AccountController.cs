@@ -28,17 +28,22 @@ namespace CookNowRecipe.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
+            ViewBag.RoleName = "";
             var results = _accountService.Login(model);
-            if(results != 0)
+            if(results.Count() != 0)
             {
                 var cookieOptions = new CookieOptions();
                 cookieOptions.Expires = DateTime.Now.AddDays(1);
                 cookieOptions.Path = "/";
-                Response.Cookies.Append("UserId", results.ToString(), cookieOptions);
+                Response.Cookies.Append("UserId", results[1].ToString(), cookieOptions);
+                var RoleName = _accountService.FindRole(results[0]);
+                ViewBag.RoleName = RoleName.Trim();
+
                 return RedirectToAction("Index", "Recipe");
             }
             else
             {
+                ViewBag.RoleName = "";
                 ViewBag.ErrorMessage = "Incorrect username or password";
                 return View();
             }
@@ -55,7 +60,16 @@ namespace CookNowRecipe.Controllers
         public IActionResult Register(RegisterViewModel model)
         {
             var results = _accountService.Register(model);
-            return RedirectToAction("Login");
+            if (results)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Username already exist";
+                return View();
+            }
+            
         }
     }
 }

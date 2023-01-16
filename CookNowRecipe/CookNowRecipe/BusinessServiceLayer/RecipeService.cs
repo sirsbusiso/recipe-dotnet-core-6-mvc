@@ -30,9 +30,9 @@ namespace CookNowRecipe.BusinessServiceLayer
             return res;
         }
 
-        public RecipeDetailsViewModel ViewDatails(int id)
+        public RecipeDetailsViewModel ViewDatails(ViewDetailsViewModel model)
         {
-            var res = _recipeBuilder.ViewDatails(id);
+            var res = _recipeBuilder.ViewDatails(model);
             return res;
         }
     }

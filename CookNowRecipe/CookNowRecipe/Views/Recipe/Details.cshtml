@@ -1,0 +1,92 @@
+﻿
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/ckeditor/ckeditor.js"></script>
+<link src="~/js/font-awesome/css/fontawesome.css" rel="stylesheet" />
+
+<div class="border border-3 border-primary"></div>
+
+<br />
+
+<div class="row">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+        <input type="button" class="btn btn-danger" value="Logout" onclick="location.href='@Url.Action("Login", "Account")'" />
+
+
+    </div>
+
+</div>
+<p></p>
+
+
+<div class="row justify-content-center align-items-center h-100" id="add">
+    <div class="card bg-white shadow-lg">
+        <div class="container py-5 h-100">
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+
+                    <div class="form-outline">
+                        <h3><span class="fw-bold">@ViewBag.Details.RecipeName</span></h3>
+
+                    </div>
+
+                </div>
+                </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+
+                    <div class="form-outline">
+                        <span class="fw-bold">@ViewBag.Details.DateCreated</span>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6 mb-4">
+
+                    <div class="form-outline">
+                        <span class="fw-bold">@ViewBag.Details.Author</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+
+                    <div class="form-outline">
+                       <ul>
+                            @foreach (var item in @ViewBag.Ingredients)
+                            {
+                                <li class="fw-bold">@item</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <div class="form-outline">
+                        <span>@Html.Raw(@ViewBag.Details.Instructions)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <input type="button" class="btn btn-default" value="Back To List" onclick="location.href='@Url.Action("Index", "Recipe")'" />
+         
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -18,12 +18,14 @@ namespace CookNowRecipe.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int Num)
         {
             var results = _recipeService.GetAll();
             if (results.NumberOfRecords != 0)
             {
                 ViewBag.NoRecords = "";
+                ViewBag.Details = "";
+
                 ViewBag.Results = results.AllRecipeViewModel;
                 ViewBag.NumberOfRecords = results.NumberOfRecords;
                 return View();
@@ -31,6 +33,8 @@ namespace CookNowRecipe.Controllers
             else
             {
                 ViewBag.NoRecords = "No Records Found";
+                ViewBag.Details = "";
+
                 ViewBag.Results = results;
 
                 return View();
@@ -75,7 +79,6 @@ namespace CookNowRecipe.Controllers
                         FilePath = "/" + folder,
                         FileType = ""
                     };
-
                     return fileModel;
                 }
             }
@@ -83,6 +86,21 @@ namespace CookNowRecipe.Controllers
             {
                 return new AddFileViewModel();
             }
+        }
+
+        [HttpPost]
+        public IActionResult Details(ViewDetailsViewModel model)
+        {
+            var results = _recipeService.ViewDatails(model);
+            if(results != null)
+            {
+                char[] delimiterChars = { ' ', ',', '.', ':', '\t' };
+                string[] ingredients = results.Ingredient.Split(delimiterChars);
+                ViewBag.Ingredients = ingredients;
+            }
+            ViewBag.Details = results;
+            return View();
+
         }
     }
 

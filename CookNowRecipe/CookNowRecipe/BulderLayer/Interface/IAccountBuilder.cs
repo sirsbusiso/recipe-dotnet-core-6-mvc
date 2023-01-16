@@ -4,7 +4,8 @@ namespace CookNowRecipe.BulderLayer.Interface
 {
     public interface IAccountBuilder
     {
-        int Login(LoginViewModel model);
+        List<int> Login(LoginViewModel model);
         bool Register(RegisterViewModel model);
+        string FindRole(int RoleId);
     }
 }

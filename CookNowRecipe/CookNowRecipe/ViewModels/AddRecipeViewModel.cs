@@ -18,7 +18,7 @@
 
         public string? Instructions { get; set; }
 
-        public DateTime DateCreated { get; set; }
+        public string? DateCreated { get; set; }
     }
     public class AllRecipeViewModel
     {
@@ -42,5 +42,13 @@
     {
         public IEnumerable<AllRecipeViewModel> AllRecipeViewModel { get; set; }
         public int NumberOfRecords { get; set; }
+    }
+
+    public class ViewDetailsViewModel
+    {
+        public int RecId
+        {
+            get; set;
+        }
     }
 }
