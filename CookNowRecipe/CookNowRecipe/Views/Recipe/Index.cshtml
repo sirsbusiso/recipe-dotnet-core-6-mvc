@@ -123,7 +123,10 @@
     $(document).ready(function() {
         $("#submitRecipe").click(function() {
 
-            var url = $("#recipeForm").attr("action");
+            if ($("input[name='RecipeName']").val() == "") {
+                $("input[name='RecipeName']").css("boarder-color: red 1px;")
+                return false;
+            }
             var formData = $("#recipeForm").serialize();
             console.log(formData);
             $.ajax({
