@@ -4,65 +4,64 @@
 <link src="~/js/font-awesome/css/fontawesome.css" rel="stylesheet" />
 
 
-
 <br />
 
-<div class="row">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        @if(@ViewBag.RoleName == "Admin"){
-             <button type="button" class="btn btn-primary" id="showAddDiv">
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+    @if (@ViewBag.RoleName == "Admin")
+    {
+        <button type="button" class="btn btn-primary" id="showAddDiv">
             Add New Recipe
         </button>
-        }
-       
-        <input type="button" class="btn btn-danger" value="Logout" onclick="location.href='@Url.Action("Login", "Account")'" />
+    }
 
-
-    </div>
-
+    <input type="button" class="btn btn-danger" value="Logout" onclick="location.href='@Url.Action("Login", "Account")'" />
 </div>
-<p></p>
+
+<br />
 <div class="border border-3 border-primary"></div>
-<div class="row justify-content-center align-items-center h-100" id="display">
-    <div class="container">
-        <h3 class="align-content-md-center">@ViewBag.NoRecords</h3>
+<div class="row justify-content-center align-items-center h-100 justify-content-md-center" id="display">
 
-        <div class="row">
-            @foreach (var item in @ViewBag.Results)
-            {
-                <div class="col-sm-4">
-                    <form id="detailsForm" method="post" enctype="multipart/form-data" asp-controller="Recipe" asp-action="Details" asp-route-slug ="@item.RecipeName">
-                        <div class="card bg-white shadow-lg" style="width: 18rem;">
-                            <div class="card-body p-5">
-                                <div hidden="hidden">
-                                    <input type="text" name="RecId" value=@item.RecId>
-                                </div>
-                                <img class="card-img-top" src="@item.FilePath" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">Recipe</h5>
-                                    <p class="card-text">@item.RecipeName</p>
 
-                                    <button class="btn btn-primary" id="viewDetails">View Details</button>
+    <p></p>
+    <h3 class="align-content-md-center">@ViewBag.NoRecords</h3>
 
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+    <div class="row">
+        @foreach (var item in @ViewBag.Results)
+        {
+            <div class="col-sm-6 col-md-4">
+                <form id="detailsForm" method="post" enctype="multipart/form-data" asp-action="Details" asp-route-slug="@item.Slug">
+                <div hidden="hidden">
+                    <input type="text" name="RecId" value=@item.RecId>
                 </div>
-            }
-        </div>
-        @if (@ViewBag.NumberOfRecords > 6)
+                <div class="card border-white">
+                    <div class="card shadow-lg">
+                        <img class="card-img-top" src="@item.FilePath" alt="Card image cap" style="width:406px;height:200px;">
+                        <h5 class="card-title">Recipe Name</h5>
+                        <p class="card-text">@item.RecipeName</p>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <button class="btn btn-primary" id="viewDetails">View Details</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+
+        }
+        <p></p>
+         <p></p>
+    @if (@ViewBag.NumberOfRecords > 6 && @ViewBag.Cards < @ViewBag.NumberOfRecords)
         {
             <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("Index", "Recipe", new {Num = 6})'">
+                <button type="button" class="btn btn-outline-dark" onclick="location.href='@Url.Action("Index", "Recipe", new {num = @ViewBag.Cards})'">
                     Load More
                 </button>
             </div>
         }
-
-
-    </div>
-</div>
+       </div>
+       </div>
 
 <div class="row justify-content-center align-items-center h-100" id="add">
     <div class="card bg-white shadow-lg">
@@ -74,7 +73,7 @@
 
                         <div class="form-outline">
                             <label class="form-label" for="RecipeName">Recipe Name</label>
-                            <input type="text" name="RecipeName" class="form-control form-control-lg" required/>
+                            <input type="text" name="RecipeName" class="form-control form-control-lg" required />
 
                         </div>
 
@@ -95,11 +94,9 @@
 
                         <div class="form-outline">
                             <label class="form-label" for="file">Recipe Image</label>
-                            <input type="file" name="File" class="form-control form-control-lg" required/>
+                            <input type="file" name="File" class="form-control form-control-lg" required />
 
                         </div>
-
-
                     </div>
                 </div>
 
@@ -116,7 +113,7 @@
                 </div>
                 <div class="row">
                     <div class="row">
-                        <div class="btn btn-outline-dark d-grid gap-2 d-md-flex justify-content-md-end">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button type="submit" class="btn btn-primary" id="submitRecipe">
                                 Save
                             </button>
@@ -132,7 +129,6 @@
         </div>
     </div>
 </div>
-
 @section Scripts {
     <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>

@@ -51,13 +51,13 @@ namespace CookNowRecipe.Controllers
             
         }
 
-        public IActionResult TestJson()
-        {
-            var data = "This is a test nothing much";
-            ViewBag.Response = data;
+        //public IActionResult TestJson()
+        //{
+        //    var data = "This is a test nothing much";
+        //    ViewBag.Response = data;
 
-            return Json(true, new System.Text.Json.JsonSerializerOptions());
-        }
+        //    return Json(true, new System.Text.Json.JsonSerializerOptions());
+        //}
 
         public IActionResult Register()
         {

@@ -7,6 +7,7 @@
         public string? Instructions { get; set; }
         public IFormFile? File { get; set; }
 
+
     }
     public class RecipeDetailsViewModel
     {
@@ -25,6 +26,7 @@
         public int? RecId { get; set; }
         public string? RecipeName { get; set; }
         public string FilePath { get; set; }
+        public string Slug => RecipeName?.Replace(' ', '-').ToLower().ToString();
     }
 
     public class AddFileViewModel

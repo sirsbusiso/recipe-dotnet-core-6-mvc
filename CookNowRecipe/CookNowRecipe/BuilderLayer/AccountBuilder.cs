@@ -58,7 +58,7 @@ namespace CookNowRecipe.BulderLayer
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Password = model.Password,
-                    RoleId = 1
+                    RoleId = 2
 
                 };
                 _context.TbUsers.Add(user);

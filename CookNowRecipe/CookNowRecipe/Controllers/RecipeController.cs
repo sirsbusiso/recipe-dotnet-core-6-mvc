@@ -23,13 +23,22 @@ namespace CookNowRecipe.Controllers
             var RoleName = Request.Cookies["RoleName"];
             ViewBag.RoleName = RoleName.Trim();
             var results = _recipeService.GetAll();
-            if (results.NumberOfRecords != 0)
+            int NumberOfCards = results.numberOfCards;
+            if (NumberOfCards != 0)
             {
                 ViewBag.NoRecords = "";
                 ViewBag.Details = "";
-                int NumberOfCards = (int)(results.numberOfCards + Num);
+                if(Num != null)
+                {
+                     NumberOfCards = (int)(results.numberOfCards + Num);
+                }
+                else
+                {
+                    NumberOfCards = (int)(results.numberOfCards + 0);
+                }
                 ViewBag.Results = results.AllRecipeViewModel.Take(NumberOfCards);
                 ViewBag.NumberOfRecords = results.NumberOfRecords;
+                ViewBag.Cards = NumberOfCards;
                 return View();
             }
             else
@@ -96,13 +105,13 @@ namespace CookNowRecipe.Controllers
             var results = _recipeService.ViewDatails(model);
             if (results != null)
             {
-                char[] delimiterChars = { ' ', ',', '.', ':', '\t' };
+                char[] delimiterChars = {',', '.', ':', '\t' };
                 string[] ingredients = results.Ingredient.Split(delimiterChars);
+                
                 ViewBag.Ingredients = ingredients;
             }
             ViewBag.Details = results;
             return View();
-
         }
     }
 

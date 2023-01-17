@@ -107,7 +107,7 @@ namespace CookNowRecipe.BulderLayer
                     RecipeName = res.RecipeName,
                     Author = GetAuthor(res.UserId),
                     DateCreated = res.DateCreated.ToShortDateString(),
-                    Ingredient = res.Ingredient,
+                    Ingredient = res.Ingredient.Trim(),
                     Instructions = HttpUtility.HtmlDecode(res.Instructions)
                 };
 
