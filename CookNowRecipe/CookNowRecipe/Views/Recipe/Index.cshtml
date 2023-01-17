@@ -5,20 +5,23 @@
 
 <div class="border border-3 border-primary"></div>
 
-
 <br />
+
 <div class="row">
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button type="button" class="btn btn-primary" id="showAddDiv">
+        @if(@ViewBag.RoleName == "Admin"){
+             <button type="button" class="btn btn-primary" id="showAddDiv">
             Add New Recipe
         </button>
+        }
+       
         <input type="button" class="btn btn-danger" value="Logout" onclick="location.href='@Url.Action("Login", "Account")'" />
 
 
     </div>
 
 </div>
-
+<p></p>
 
 <div class="row justify-content-center align-items-center h-100" id="display">
     <div class="container">
@@ -28,16 +31,23 @@
             @foreach (var item in @ViewBag.Results)
             {
                 <div class="col-sm-4">
-                    <div class="card bg-white shadow-lg" style="width: 18rem;">
-                        <div class="card-body p-5">
-                            <img class="card-img-top" src="@item.FilePath" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Recipe</h5>
-                                <p class="card-text">@item.RecipeName</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
+                    <form id="detailsForm" method="post" enctype="multipart/form-data" asp-controller="Recipe" asp-action="Details">
+                        <div class="card bg-white shadow-lg" style="width: 18rem;">
+                            <div class="card-body p-5">
+                                <div hidden="hidden">
+                                    <input type="text" name="RecId" value=@item.RecId>
+                                </div>
+                                <img class="card-img-top" src="@item.FilePath" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">Recipe</h5>
+                                    <p class="card-text">@item.RecipeName</p>
+
+                                    <button class="btn btn-primary" id="viewDetails">View Details</button>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             }
         </div>
@@ -55,98 +65,142 @@
 </div>
 
 <div class="row justify-content-center align-items-center h-100" id="add">
-    <div class="container py-5 h-100">
-        <form id="recipeForm" method="post" enctype="multipart/form-data" asp-controller="Recipe" asp-action="Create">
+    <div class="card bg-white shadow-lg">
+        <div class="container py-5 h-100">
+            <form id="recipeForm" method="post" enctype="multipart/form-data" asp-controller="Recipe" asp-action="Create">
 
-            <div class="row">
-                <div class="col-md-6 mb-4">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
 
-                    <div class="form-outline">
-                        <label class="form-label" for="userName">Recipe Name</label>
-                        <input type="text" name="RecipeName" class="form-control form-control-lg" />
+                        <div class="form-outline">
+                            <label class="form-label" for="RecipeName">Recipe Name</label>
+                            <input type="text" name="RecipeName" class="form-control form-control-lg" required/>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 mb-4">
+
+                        <div class="form-outline">
+                            <label class="form-label" for="Ingredient">Ingredient</label>
+                            <input type="text" name="Ingredient" class="form-control form-control-lg" required />
+
+                        </div>
 
                     </div>
 
                 </div>
-                <div class="col-md-6 mb-4">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
 
-                    <div class="form-outline">
-                        <label class="form-label" for="userName">Ingredient</label>
-                        <input type="text" name="Ingredient" class="form-control form-control-lg" />
+                        <div class="form-outline">
+                            <label class="form-label" for="file">Recipe Image</label>
+                            <input type="file" name="File" class="form-control form-control-lg" required/>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <label class="form-label" for="Instructions">Instructions</label>
+                        <div class="form-outline">
+                            <textarea type="text" name="Instructions" class="ckeditor" cols="4" rows="4" required></textarea>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary" id="submitRecipe">
+                                Save
+                            </button>
+                            <button type="button" class="btn btn-default backToList" id="">Back To List</button>
+
+
+                        </div>
 
                     </div>
 
                 </div>
-
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-4">
-
-                    <div class="form-outline">
-                        <label class="form-label" for="userName">Recipe Image</label>
-                        <input type="file" name="File" class="form-control form-control-lg" />
-
-                    </div>
-
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 mb-4">
-                    <label class="form-label" for="userName">Instructions</label>
-                    <div class="form-outline">
-                        <textarea type="text" name="Instructions" class="ckeditor" cols="4" rows="4"></textarea>
-
-                    </div>
-
-
-                </div>
-            </div>
-            <div class="row">
-                <button class="btn btn-outline-dark" id="submitRecipe" type="submit">Save</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
-<!-- Modal -->
-
-
-
-<script>
-    $(document).ready(function() {
-        $("#display").show();
-        $("#add").hide();
-        CKEDITOR.replace('#Instructions');
-    });
-    $(document).ready(function() {
-        $("#submitRecipe").click(function() {
-
-            if ($("input[name='RecipeName']").val() == "") {
-                $("input[name='RecipeName']").css("boarder-color: red 1px;")
-                return false;
-            }
-            var formData = $("#recipeForm").serialize();
-            console.log(formData);
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: formData,
-                processData: false,
-                contentType: false
-            });
+@section Scripts {
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script>
+        $(document).ready(function() {
             $("#display").show();
             $("#add").hide();
+            CKEDITOR.replace('#Instructions');
         });
 
-    });
+        $(document).ready(function() {
+            $("#submitRecipe").click(function() {
+                $("#recipeForm").validate({
+                    errorClass: "error fail-alert",
+                    validClass: "valid success-alert"
+                });
+                var url = $("#recipeForm").attr("action");
+                var formData = $("#recipeForm").serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: formData,
+                    processData: false,
+                    contentType: false
+                });
+                $("#display").show();
+                $("#add").hide();
 
-    $(document).ready(function() {
-        $("#showAddDiv").click(function() {
-            $("#display").hide();
-            $("#add").show();
+            });
+
         });
-    });
 
-</script>
+        $(document).ready(function() {
+            $("#viewDetails").click(function() {
+
+                var url = $("#detailsForm").attr("action");
+                var formData = $("#detailsForm").serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        alert(data);
+                    }
+                });
+
+            });
+
+        });
+
+        $(document).ready(function() {
+            $("#showAddDiv").click(function() {
+                $("#display").hide();
+                $("#add").show();
+
+            });
+        });
+        $(document).ready(function() {
+            $(".backToList").click(function() {
+                {
+                    $("#display").show();
+                    $("#add").hide();
+
+                }
+            });
+        })
+
+    </script>
+}

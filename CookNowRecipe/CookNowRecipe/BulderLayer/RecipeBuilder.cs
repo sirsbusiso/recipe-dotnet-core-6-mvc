@@ -95,17 +95,17 @@ namespace CookNowRecipe.BulderLayer
 
         }
 
-        public RecipeDetailsViewModel ViewDatails(int id)
-        {
 
-            var res = _context.TbRecipes.FirstOrDefault(r => r.RecId == id);
-            if (res == null)
+        public RecipeDetailsViewModel ViewDatails(ViewDetailsViewModel model)
+        {
+            var res = _context.TbRecipes.FirstOrDefault(r => r.RecId == model.RecId);
+            if (res != null)
             {
                 var recipe = new RecipeDetailsViewModel()
                 {
                     RecipeName = res.RecipeName,
-                    Author = res.User.FirstName + " " + res.User.LastName,
-                    DateCreated = res.DateCreated,
+                    Author = GetAuthor(res.UserId),
+                    DateCreated = res.DateCreated.ToShortDateString(),
                     Ingredient = res.Ingredient,
                     Instructions = HttpUtility.HtmlDecode(res.Instructions)
                 };
@@ -117,6 +117,19 @@ namespace CookNowRecipe.BulderLayer
                 return new RecipeDetailsViewModel();
             }
 
+        }
+
+        public string GetAuthor(int? UserId)
+        {
+            var author = _context.TbUsers.FirstOrDefault(r => r.UserId == UserId);
+            if (author == null)
+            {
+                return "";
+            }
+            else
+            {
+                return author.FirstName + " " + author.LastName;
+            }
         }
     }
 }

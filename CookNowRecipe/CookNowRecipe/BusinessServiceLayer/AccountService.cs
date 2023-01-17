@@ -12,8 +12,13 @@ namespace CookNowRecipe.BusinessServiceLayer
         {
             _accountBuilder = accountBuilder;
         }
+        public string FindRole(int RoleId)
+        {
+            var res = _accountBuilder.FindRole(RoleId);
+            return res;
+        }
 
-        public int Login(LoginViewModel model)
+        public List<int> Login(LoginViewModel model)
         {
             var res = _accountBuilder.Login(model);
             return res;
