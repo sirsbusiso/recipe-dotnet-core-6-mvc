@@ -17,6 +17,11 @@ builder.Services.AddTransient<IAccountBuilder, AccountBuilder>();
 builder.Services.AddTransient<IAccountService, AccountService>();
 builder.Services.AddTransient<IRecipeBuilder, RecipeBuilder>();
 builder.Services.AddTransient<IRecipeService, RecipeService>();
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.AppendTrailingSlash = true;
+});
 
 
 
@@ -41,6 +46,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}/{slung?}");
 
 app.Run();

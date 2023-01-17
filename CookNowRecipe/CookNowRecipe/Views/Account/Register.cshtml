@@ -1,5 +1,4 @@
-﻿<script src="~/lib/jquery/dist/jquery.js"></script>
-
+﻿
 <section class="vh-100 gradient-custom">
     <div class="container py-5 h-100">
 
@@ -10,13 +9,13 @@
                 <div class="card bg-white shadow-lg">
                     <div class="card-body p-5">
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
-                        <form id="registerForm" method="post" enctype="multipart/form-data" asp-controller="Account" asp-action="Register">
+                        <form id="registerForm" method="post" enctype="multipart/form-data" asp-action="Register">
 
                             <div class="row">
                                 <div class="col-md-12 mb-4">
 
                                     <div class="form-outline">
-                                        <label class="form-label" for="userName">User Name (User name must be email address)</label>
+                                        <label class="form-label" for="userName">User Name (Required: User name must be email address)</label>
                                         <input type="email" id="UserName" name="UserName" class="form-control form-control-lg" required />
 
                                     </div>
@@ -28,7 +27,7 @@
                                 <div class="col-md-12 mb-4">
 
                                     <div class="form-outline">
-                                        <label class="form-label" for="firstName">First Name</label>
+                                        <label class="form-label" for="firstName">First Name (Required)</label>
                                         <input type="text" id="FirstName" name="FirstName" class="form-control form-control-lg" required />
 
                                     </div>
@@ -40,7 +39,7 @@
                                 <div class="col-md-12 mb-4 d-flex align-items-center">
 
                                     <div class="form-outline datepicker w-100">
-                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <label for="lastName" class="form-label">Last Name (Required)</label>
                                         <input type="text" name="LastName" class="form-control form-control-lg" id="LastName" required />
                                     </div>
 
@@ -51,24 +50,14 @@
                                 <div class="col-md-12 mb-4 d-flex align-items-center">
 
                                     <div class="form-outline datepicker w-100">
-                                        <label for="password" class="form-label">Password</label>
+                                        <label for="password" class="form-label">Password (Required)</label>
                                         <input type="password" name="Password" class="form-control form-control-lg" id="Password" min="7" required />
                                     </div>
 
                                 </div>
 
                             </div>
-                            <div class="row">
-                                <div class="col-md-12 mb-4 d-flex align-items-center">
-
-                                    <div class="form-outline datepicker w-100">
-                                        <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                        <input type="password" class="form-control form-control-lg" id="ConfirmPassword" required />
-                                    </div>
-
-                                </div>
-
-                            </div>
+                      
                             <div class="d-grid">
                                 <button class="btn btn-outline-dark" id="registerUser" type="submit">Register</button>
                             </div>
@@ -82,46 +71,8 @@
 </section>
 
 @section Scripts {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-
-
-
-    <script>
-
-        $(document).ready(function() {
-            $("#registerUser").click(function() {
-                $("#registerForm").validate({
-                    errorClass: "error fail-alert",
-                    validClass: "valid success-alert",
-                    rules: {
-                        Password: {
-                            required: true, minlength: 5
-                        },
-                        ConfirmPassword: {
-                            required: true, equalTo: "#Password", minlength: 5
-                        }
-                    }
-                });
-
-                var url = $("#registerForm").attr("action");
-                var formData = $("#registerForm").serialize();
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: formData,
-                    processData: false,
-                    contentType: false
-                });
-            });
-
-        });
-
-
-        $('input').focus(function() {
-            $("#loginError").text("");
-        })
-    </script>
-
 
 }

@@ -18,15 +18,17 @@ namespace CookNowRecipe.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index(int Num)
+        public IActionResult Index(int? Num)
         {
+            var RoleName = Request.Cookies["RoleName"];
+            ViewBag.RoleName = RoleName.Trim();
             var results = _recipeService.GetAll();
             if (results.NumberOfRecords != 0)
             {
                 ViewBag.NoRecords = "";
                 ViewBag.Details = "";
-
-                ViewBag.Results = results.AllRecipeViewModel;
+                int NumberOfCards = (int)(results.numberOfCards + Num);
+                ViewBag.Results = results.AllRecipeViewModel.Take(NumberOfCards);
                 ViewBag.NumberOfRecords = results.NumberOfRecords;
                 return View();
             }
@@ -92,7 +94,7 @@ namespace CookNowRecipe.Controllers
         public IActionResult Details(ViewDetailsViewModel model)
         {
             var results = _recipeService.ViewDatails(model);
-            if(results != null)
+            if (results != null)
             {
                 char[] delimiterChars = { ' ', ',', '.', ':', '\t' };
                 string[] ingredients = results.Ingredient.Split(delimiterChars);

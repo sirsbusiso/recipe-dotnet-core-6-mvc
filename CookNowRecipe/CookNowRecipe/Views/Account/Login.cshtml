@@ -1,8 +1,4 @@
 ﻿
-
-
-
-
 <div class="vh-100 d-flex justify-content-center align-items-center">
     <div class="container">
         <div class="row d-flex justify-content-center">
@@ -10,7 +6,7 @@
                 <div class="border border-3 border-primary"></div>
                 <div class="card bg-white shadow-lg">
                     <div class="card-body p-5">
-                        <form id="loginForm" method="post" enctype="multipart/form-data" asp-controller="Account" asp-action="Login" class="mb-3 mt-md-4">
+                        <form id="loginForm" method="post" enctype="multipart/form-data" class="mb-3 mt-md-4"  asp-action="Login">
                             <h2 class="fw-bold mb-2 text-uppercase ">Recipe</h2>
                             <p class=" mb-5">Please enter your email and password!</p>
                             <span id="loginError" class="alert-danger">@ViewBag.ErrorMessage</span>
@@ -20,7 +16,7 @@
                                 <input type="email" name="UserName" class="form-control" id="email" placeholder="name@example.com" value="" required>
                             </div>
                             <div class="mb-3">
-                                <label for="password">Password (required, at least 6 characters)</label>
+                                <label for="password">Password</label>
                                 <input type="password" name="Password" class="form-control" id="password" placeholder="*******" value="" required>
                             </div>
                             <div class="d-grid">
@@ -29,7 +25,7 @@
                         </form>
                         <div>
                             <p class="mb-0  text-center">
-                                Don't have an account? <a asp-controller="Account" asp-action="Register">Register</a>
+                                Don't have an account? <a asp-action="Register" asp-route-slug="test-works">Register</a>
                             </p>
                         </div>
 
@@ -43,34 +39,6 @@
 @section Scripts {
     <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-
-
-    <script>
-        $(document).ready(function() {
-            $("#loginUser").click(function(event) {
-                $("#loginForm").validate({
-                    errorClass: "error fail-alert",
-                    validClass: "valid success-alert"
-                });
-                var url = $("#loginForm").attr("action");
-                var formData = $("#loginForm").serialize();
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    url: url,
-                    data: formData,
-                    processData: false,
-                    contentType: false
-                });
-
-            });
-
-        });
-
-        $('input').focus(function() {
-            $("#loginError").text("");
-        })
-    </script>
 
 }
 

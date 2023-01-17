@@ -58,8 +58,9 @@ namespace CookNowRecipe.BulderLayer
             }
             var results = new ResultViewModel()
             {
-                AllRecipeViewModel = allRecipes.Take(numberOfCards),
-                NumberOfRecords = numberOfRecords
+                AllRecipeViewModel = allRecipes,
+                NumberOfRecords = numberOfRecords,
+                numberOfCards = numberOfCards
             };
             return results;
 

@@ -3,7 +3,7 @@
 <script src="~/js/ckeditor/ckeditor.js"></script>
 <link src="~/js/font-awesome/css/fontawesome.css" rel="stylesheet" />
 
-<div class="border border-3 border-primary"></div>
+
 
 <br />
 
@@ -22,7 +22,7 @@
 
 </div>
 <p></p>
-
+<div class="border border-3 border-primary"></div>
 <div class="row justify-content-center align-items-center h-100" id="display">
     <div class="container">
         <h3 class="align-content-md-center">@ViewBag.NoRecords</h3>
@@ -31,7 +31,7 @@
             @foreach (var item in @ViewBag.Results)
             {
                 <div class="col-sm-4">
-                    <form id="detailsForm" method="post" enctype="multipart/form-data" asp-controller="Recipe" asp-action="Details">
+                    <form id="detailsForm" method="post" enctype="multipart/form-data" asp-controller="Recipe" asp-action="Details" asp-route-slug ="@item.RecipeName">
                         <div class="card bg-white shadow-lg" style="width: 18rem;">
                             <div class="card-body p-5">
                                 <div hidden="hidden">
@@ -54,7 +54,7 @@
         @if (@ViewBag.NumberOfRecords > 6)
         {
             <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                <button type="button" class="btn btn-info" id="">
+                <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("Index", "Recipe", new {Num = 6})'">
                     Load More
                 </button>
             </div>
@@ -116,7 +116,7 @@
                 </div>
                 <div class="row">
                     <div class="row">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <div class="btn btn-outline-dark d-grid gap-2 d-md-flex justify-content-md-end">
                             <button type="submit" class="btn btn-primary" id="submitRecipe">
                                 Save
                             </button>
@@ -136,71 +136,4 @@
 @section Scripts {
     <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("#display").show();
-            $("#add").hide();
-            CKEDITOR.replace('#Instructions');
-        });
-
-        $(document).ready(function() {
-            $("#submitRecipe").click(function() {
-                $("#recipeForm").validate({
-                    errorClass: "error fail-alert",
-                    validClass: "valid success-alert"
-                });
-                var url = $("#recipeForm").attr("action");
-                var formData = $("#recipeForm").serialize();
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: formData,
-                    processData: false,
-                    contentType: false
-                });
-                $("#display").show();
-                $("#add").hide();
-
-            });
-
-        });
-
-        $(document).ready(function() {
-            $("#viewDetails").click(function() {
-
-                var url = $("#detailsForm").attr("action");
-                var formData = $("#detailsForm").serialize();
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(data) {
-                        alert(data);
-                    }
-                });
-
-            });
-
-        });
-
-        $(document).ready(function() {
-            $("#showAddDiv").click(function() {
-                $("#display").hide();
-                $("#add").show();
-
-            });
-        });
-        $(document).ready(function() {
-            $(".backToList").click(function() {
-                {
-                    $("#display").show();
-                    $("#add").hide();
-
-                }
-            });
-        })
-
-    </script>
 }

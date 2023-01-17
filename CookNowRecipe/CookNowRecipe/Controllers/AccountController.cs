@@ -37,7 +37,8 @@ namespace CookNowRecipe.Controllers
                 cookieOptions.Path = "/";
                 Response.Cookies.Append("UserId", results[1].ToString(), cookieOptions);
                 var RoleName = _accountService.FindRole(results[0]);
-                ViewBag.RoleName = RoleName.Trim();
+                Response.Cookies.Append("RoleName",RoleName, cookieOptions);
+
 
                 return RedirectToAction("Index", "Recipe");
             }

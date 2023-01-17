@@ -42,6 +42,7 @@
     {
         public IEnumerable<AllRecipeViewModel> AllRecipeViewModel { get; set; }
         public int NumberOfRecords { get; set; }
+        public int numberOfCards { get; set; }
     }
 
     public class ViewDetailsViewModel
