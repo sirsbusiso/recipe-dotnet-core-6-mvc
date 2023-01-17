@@ -38,3 +38,8 @@ CREATE TABLE tb_Recipe_Image
   [FilePath] varchar(255) not null,
   [FileType] varchar(255) null
 )
+
+INSERT INTO tb_Role(RoleName) VALUES('Admin');
+INSERT INTO tb_Role(RoleName) VALUES('User');
+
+INSERT INTO tb_User(RoleId, UserName, FirstName, LastName, Password) VALUES(1,'admin@cooknowrecipe.co.za', 'John', 'Smith', 'Johns123');
