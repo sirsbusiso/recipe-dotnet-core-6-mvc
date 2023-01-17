@@ -46,7 +46,6 @@ namespace CookNowRecipe.BulderLayer
 
         }
 
-
         public bool Register(RegisterViewModel model)
         {
             var userNameExist = _context.TbUsers.FirstOrDefault(x => x.UserName == model.UserName);
