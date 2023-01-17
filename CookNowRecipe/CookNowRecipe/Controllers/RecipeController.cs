@@ -18,7 +18,7 @@ namespace CookNowRecipe.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index(int? Num)
+        public IActionResult Index(int? num)
         {
             var RoleName = Request.Cookies["RoleName"];
             ViewBag.RoleName = RoleName.Trim();
@@ -28,9 +28,9 @@ namespace CookNowRecipe.Controllers
             {
                 ViewBag.NoRecords = "";
                 ViewBag.Details = "";
-                if(Num != null)
+                if(num != null)
                 {
-                     NumberOfCards = (int)(results.numberOfCards + Num);
+                     NumberOfCards = (int)(results.numberOfCards + num);
                 }
                 else
                 {
