@@ -83,5 +83,23 @@ $(document).ready(function () {
 
         }
     });
-})
+});
+
+$(document).ready(function () {
+    $("#testTest").click(function () {
+
+        $.ajax({
+            type: 'POST',
+            url: '/Account/TestJson',
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                //var res = JSON.stringify(data);
+                alert(data);
+            }
+        });
+
+    });
+
+});
 

@@ -6,7 +6,7 @@
                 <div class="border border-3 border-primary"></div>
                 <div class="card bg-white shadow-lg">
                     <div class="card-body p-5">
-                        <form id="loginForm" method="post" enctype="multipart/form-data" class="mb-3 mt-md-4"  asp-action="Login">
+                        <form id="loginForm" method="post" enctype="multipart/form-data" class="mb-3 mt-md-4" asp-action="Login">
                             <h2 class="fw-bold mb-2 text-uppercase ">Recipe</h2>
                             <p class=" mb-5">Please enter your email and password!</p>
                             <span id="loginError" class="alert-danger">@ViewBag.ErrorMessage</span>
@@ -28,6 +28,10 @@
                                 Don't have an account? <a asp-action="Register" asp-route-slug="test-works">Register</a>
                             </p>
                         </div>
+                        <div class="d-grid">
+                            <button class="btn btn-outline-dark" id="testTest" type="button">Login</button>
+                        </div>
+                        <span>test - @ViewBag.Response</span>
 
                     </div>
                 </div>
